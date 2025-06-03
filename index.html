@@ -1,47 +1,42 @@
-<!-- FICHIER : index.html -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ArchiBot Pro - Plateforme IA pour Architectes | LITTORAL GROUP</title>
-  <meta name="description" content="Plateforme sécurisée d'intelligence artificielle pour architectes. Génération automatique de plans, métrés et analyses techniques professionnelles.">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&display=swap">
+  <title>ArchiBot Pro - Plateforme IA | LITTORAL GROUP</title>
   <style>
     body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
       color: white;
+      padding: 50px 20px;
       text-align: center;
-      padding: 100px 20px 50px;
     }
     .container {
-      max-width: 800px;
-      margin: auto;
       background: white;
       color: #333;
       border-radius: 20px;
       padding: 40px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+      max-width: 800px;
+      margin: auto;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
     }
     h1 {
       font-size: 2.8rem;
-      margin-bottom: 10px;
       color: #667eea;
     }
     p {
       font-size: 1.2rem;
-      margin-bottom: 20px;
+      margin: 20px 0;
     }
     .btn {
       display: inline-block;
-      padding: 15px 30px;
       margin: 10px;
+      padding: 15px 30px;
       border: none;
       border-radius: 25px;
-      font-size: 1rem;
       font-weight: bold;
+      font-size: 1rem;
       cursor: pointer;
       text-decoration: none;
     }
@@ -54,70 +49,64 @@
       border: 2px solid #667eea;
       color: #667eea;
     }
-    .logo {
-      font-size: 2rem;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
     .footer {
-      margin-top: 40px;
-      font-size: 0.9rem;
-      color: #888;
+      margin-top: 30px;
+      font-size: 0.85rem;
+      color: #666;
+    }
+    .footer a {
+      color: #667eea;
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="logo">🏗️ ArchiBot Pro</div>
-    <h1>L'IA au service du bâtiment</h1>
-    <p>Générez automatiquement vos CCTP, estimations, notices descriptives,<br>
-       et vos dossiers de permis de construire à partir d'une simple description.</p>
+    <h1>ArchiBot Pro</h1>
+    <p>L’IA au service de la construction.<br>
+       Générez vos plans, notices, estimations et CCTP automatiquement.</p>
 
-    <a href="archibotpro-free.html" class="btn btn-secondary">🆓 Essayer la Version Gratuite</a>
-    <button class="btn btn-primary" onclick="openAuth()">🚀 Accéder à la Version PRO</button>
+    <a href="archibotpro-free.html" class="btn btn-secondary">🆓 Essayer Gratuitement</a>
+    <button class="btn btn-primary" onclick="openModal()">🚀 Accéder à la Version PRO</button>
 
     <div class="footer">
-      Lancé par LITTORAL GROUP – Occitanie<br>
-      SIRET: 84826605200010<br>
-      Plateforme sécurisée – Copie interdite – Mentions légales dans <a href="mentions-legales.html">cette page</a>
+      Lancé par LITTORAL GROUP – SIRET : 84826605200010<br>
+      <a href="mentions-legales.html">Mentions légales</a> • 
+      <a href="cgu.html">CGU</a>
     </div>
   </div>
 
-  <!-- Modal connexion -->
-  <div id="authModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.7); justify-content:center; align-items:center;">
-    <form onsubmit="login(event)" style="background:white; padding:30px; border-radius:20px; max-width:400px; width:90%;">
+  <!-- Modal -->
+  <div id="modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.7); justify-content:center; align-items:center;">
+    <form onsubmit="login(event)" style="background:white; padding:30px; border-radius:20px; width:90%; max-width:400px;">
       <h2 style="color:#333;">Connexion PRO</h2>
-      <input type="text" id="prenom" placeholder="Prénom" required style="margin:10px 0; padding:10px; width:100%; border-radius:10px; border:1px solid #ccc;">
-      <input type="text" id="nom" placeholder="Nom" required style="margin:10px 0; padding:10px; width:100%; border-radius:10px; border:1px solid #ccc;">
-      <input type="email" id="email" placeholder="Email" required style="margin:10px 0; padding:10px; width:100%; border-radius:10px; border:1px solid #ccc;">
-      <input type="password" id="password" placeholder="Mot de passe" required style="margin:10px 0; padding:10px; width:100%; border-radius:10px; border:1px solid #ccc;">
-      <button type="submit" style="margin-top:10px; padding:12px 20px; background:#667eea; color:white; border:none; border-radius:10px; width:100%; font-weight:bold;">Accéder</button>
+      <input id="prenom" placeholder="Prénom" required style="margin:10px 0; padding:10px; width:100%; border-radius:10px;" />
+      <input id="nom" placeholder="Nom" required style="margin:10px 0; padding:10px; width:100%; border-radius:10px;" />
+      <input type="email" id="email" placeholder="Email" required style="margin:10px 0; padding:10px; width:100%; border-radius:10px;" />
+      <input type="password" id="password" placeholder="Mot de passe" required style="margin:10px 0; padding:10px; width:100%; border-radius:10px;" />
+      <button type="submit" style="padding:12px; width:100%; border:none; background:#667eea; color:white; border-radius:10px; font-weight:bold;">Se connecter</button>
     </form>
   </div>
 
   <script>
-    function openAuth() {
-      document.getElementById('authModal').style.display = 'flex';
+    function openModal() {
+      document.getElementById("modal").style.display = "flex";
     }
-
     function login(event) {
       event.preventDefault();
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
       const prenom = document.getElementById("prenom").value;
       const nom = document.getElementById("nom").value;
-
-      // Simulation : admin
       if (email === "admin@littoralgroup.fr" && password === "LG2025@ArchiBot!") {
-        localStorage.setItem('userType', 'admin');
-        localStorage.setItem('userName', "Administrateur");
-        window.location.href = "archibotpro-dashboard.html";
+        localStorage.setItem("userType", "admin");
+        localStorage.setItem("userName", "Administrateur");
       } else {
-        localStorage.setItem('userType', 'pro');
-        localStorage.setItem('userName', prenom + ' ' + nom);
-        localStorage.setItem('userEmail', email);
-        window.location.href = "archibotpro-dashboard.html";
+        localStorage.setItem("userType", "pro");
+        localStorage.setItem("userName", prenom + " " + nom);
+        localStorage.setItem("userEmail", email);
       }
+      window.location.href = "archibotpro-dashboard.html";
     }
   </script>
 </body>
