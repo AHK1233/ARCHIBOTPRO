@@ -1,0 +1,162 @@
+<!-- FICHIER : archibotpro-free.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ArchiBot Pro – Version Gratuite</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #333;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    }
+    h1 {
+      color: #667eea;
+    }
+    .chat-box {
+      margin-top: 30px;
+      background: #f9f9f9;
+      padding: 20px;
+      border-radius: 15px;
+      height: 400px;
+      overflow-y: auto;
+    }
+    .input-area {
+      display: flex;
+      margin-top: 20px;
+    }
+    input {
+      flex: 1;
+      padding: 12px;
+      border: 2px solid #ccc;
+      border-radius: 25px;
+      margin-right: 10px;
+    }
+    button {
+      background: #667eea;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 25px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .message {
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 10px;
+      max-width: 80%;
+    }
+    .user {
+      background: #667eea;
+      color: white;
+      margin-left: auto;
+      text-align: right;
+    }
+    .bot {
+      background: #eee;
+    }
+    .counter {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: #555;
+      text-align: center;
+    }
+    .back {
+      display: block;
+      margin-top: 30px;
+      text-align: center;
+    }
+    .back a {
+      color: #667eea;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Assistant ArchiBot – Version Gratuite</h1>
+    <p>Posez vos questions architecturales ! Vous êtes limité à 5 questions par jour.</p>
+
+    <div class="chat-box" id="chatBox">
+      <div class="message bot"><strong>ArchiBot :</strong> Bonjour ! Posez-moi votre question sur votre projet de construction ou de rénovation.</div>
+    </div>
+
+    <div class="input-area">
+      <input type="text" id="userInput" placeholder="Posez votre question..." maxlength="200" />
+      <button onclick="sendMessage()">Envoyer</button>
+    </div>
+
+    <div class="counter">
+      Questions restantes aujourd’hui : <span id="remaining">5</span>/5
+    </div>
+
+    <div class="back">
+      <a href="index.html">← Retour à l'accueil</a>
+    </div>
+  </div>
+
+  <script>
+    let questionsUsed = parseInt(localStorage.getItem("questionsUsed") || "0");
+    const today = new Date().toDateString();
+    const lastReset = localStorage.getItem("lastReset");
+
+    if (today !== lastReset) {
+      questionsUsed = 0;
+      localStorage.setItem("questionsUsed", "0");
+      localStorage.setItem("lastReset", today);
+    }
+
+    const maxQuestions = 5;
+    updateCounter();
+
+    function sendMessage() {
+      const input = document.getElementById("userInput");
+      const message = input.value.trim();
+      if (!message || questionsUsed >= maxQuestions) return;
+
+      addMessage(message, "user");
+      input.value = "";
+
+      setTimeout(() => {
+        const replies = [
+          "Bonne question ! Pour des réponses plus détaillées, passez à la version PRO.",
+          "Je peux vous aider, mais mes capacités sont limitées ici.",
+          "La version PRO permet de générer automatiquement les plans et estimations.",
+          "Pour plus de précision, passez à ArchiBot Pro.",
+          "Intéressant ! Je vous recommande de consulter un architecte agréé. 😊"
+        ];
+        const reply = replies[Math.floor(Math.random() * replies.length)];
+        addMessage(reply, "bot");
+
+        questionsUsed++;
+        localStorage.setItem("questionsUsed", questionsUsed);
+        updateCounter();
+      }, 800);
+    }
+
+    function addMessage(text, type) {
+      const box = document.getElementById("chatBox");
+      const div = document.createElement("div");
+      div.className = "message " + type;
+      div.innerHTML = `<strong>${type === "user" ? "Vous" : "ArchiBot"} :</strong> ${text}`;
+      box.appendChild(div);
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function updateCounter() {
+      document.getElementById("remaining").textContent = maxQuestions - questionsUsed;
+    }
+  </script>
+</body>
+</html>
