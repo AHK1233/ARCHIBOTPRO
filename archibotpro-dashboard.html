@@ -1,0 +1,166 @@
+<!-- FICHIER : archibotpro-dashboard.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ArchiBot Pro – Tableau de Bord</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #333;
+      margin: 0;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    }
+    h1 {
+      color: #667eea;
+    }
+    .chat-box {
+      margin-top: 30px;
+      background: #f9f9f9;
+      padding: 20px;
+      border-radius: 15px;
+      height: 400px;
+      overflow-y: auto;
+    }
+    .input-area {
+      display: flex;
+      margin-top: 20px;
+    }
+    input {
+      flex: 1;
+      padding: 12px;
+      border: 2px solid #ccc;
+      border-radius: 25px;
+      margin-right: 10px;
+    }
+    button {
+      background: #667eea;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 25px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .message {
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 10px;
+      max-width: 80%;
+    }
+    .user {
+      background: #667eea;
+      color: white;
+      margin-left: auto;
+      text-align: right;
+    }
+    .bot {
+      background: #eee;
+    }
+    .tools {
+      margin-top: 30px;
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 15px;
+    }
+    .tools h3 {
+      color: #444;
+    }
+    .tool-btn {
+      display: inline-block;
+      background: #00b894;
+      color: white;
+      padding: 12px 20px;
+      margin: 10px 10px 0 0;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .logout {
+      text-align: right;
+      margin-top: 20px;
+    }
+    .logout button {
+      background: #ff6b6b;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Bienvenue sur ArchiBot Pro</h1>
+    <p>Bonjour <strong id="userName">Utilisateur</strong> – vous êtes connecté à la version professionnelle.</p>
+
+    <div class="chat-box" id="chatBox">
+      <div class="message bot"><strong>ArchiBot :</strong> Bonjour ! Décrivez votre projet, je peux générer des plans, métrés, notices, et plus encore.</div>
+    </div>
+
+    <div class="input-area">
+      <input type="text" id="userInput" placeholder="Décrivez votre projet..." maxlength="300"/>
+      <button onclick="sendMessage()">Envoyer</button>
+    </div>
+
+    <div class="tools">
+      <h3>Outils disponibles</h3>
+      <a href="#" class="tool-btn">📐 Générer un plan</a>
+      <a href="#" class="tool-btn">📊 Calculer un métré</a>
+      <a href="#" class="tool-btn">📄 Exporter un rapport</a>
+      <a href="index.html" class="tool-btn">🔙 Retour accueil</a>
+    </div>
+
+    <div class="logout">
+      <button onclick="logout()">Se déconnecter</button>
+    </div>
+  </div>
+
+  <script>
+    // Affiche le nom de l'utilisateur
+    document.getElementById("userName").textContent = localStorage.getItem("userName") || "Utilisateur";
+
+    function sendMessage() {
+      const input = document.getElementById("userInput");
+      const message = input.value.trim();
+      if (!message) return;
+
+      addMessage(message, "user");
+
+      setTimeout(() => {
+        const responses = [
+          "Génération de plan en cours...",
+          "Analyse technique initialisée...",
+          "Les métrés seront disponibles en PDF dans quelques instants.",
+          "Projet archivé avec succès.",
+          "Les documents CCTP sont en cours de création."
+        ];
+        const reply = responses[Math.floor(Math.random() * responses.length)];
+        addMessage(reply, "bot");
+      }, 1000);
+
+      input.value = "";
+    }
+
+    function addMessage(text, type) {
+      const box = document.getElementById("chatBox");
+      const div = document.createElement("div");
+      div.className = "message " + type;
+      div.innerHTML = `<strong>${type === "user" ? "Vous" : "ArchiBot"} :</strong> ${text}`;
+      box.appendChild(div);
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function logout() {
+      localStorage.clear();
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>
